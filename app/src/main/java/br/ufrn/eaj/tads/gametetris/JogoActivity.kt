@@ -16,7 +16,7 @@ class JogoActivity : AppCompatActivity() {
 
     var pt = Ponto(0,15)
 
-    inner class Ponto(var x:Int,var y:Int){
+    /*inner class Ponto(var x:Int,var y:Int){
         fun moveDown(){
             x++
         }
@@ -27,7 +27,7 @@ class JogoActivity : AppCompatActivity() {
             y--
         }
 
-    }
+    }*/
 
     //val board = Array(LINHA, { IntArray(COLUNA) })
     var board = Array(LINHA) {
@@ -37,7 +37,6 @@ class JogoActivity : AppCompatActivity() {
     var boardView = Array(LINHA){
         arrayOfNulls<ImageView>(COLUNA)
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela_jogo)
@@ -52,6 +51,16 @@ class JogoActivity : AppCompatActivity() {
                 boardView[i][j] = inflater.inflate(R.layout.inflate_image_view, gridboard, false) as ImageView
                 gridboard.addView( boardView[i][j])
             }
+        }
+        //realizam o movimento das peças do tabuleiro
+        btnLeft.setOnClickListener(){
+            pt.moveLeft()
+        }
+        btnRight.setOnClickListener() {
+            pt.moveRight()
+        }
+        btnDown.setOnClickListener(){
+            pt.moveDown()
         }
 
         gameRun()
