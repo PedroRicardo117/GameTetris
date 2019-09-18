@@ -2,21 +2,14 @@ package br.ufrn.eaj.tads.gametetris
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_tela_jogo.*
 import android.view.LayoutInflater
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 
+class JogoActivity : AppCompatActivity() {
 
-
-class MainActivity : AppCompatActivity() {
-
-    val LINHA = 36
+    val LINHA = 40
     val COLUNA = 26
     var running = true
     var speed:Long = 300
@@ -27,11 +20,16 @@ class MainActivity : AppCompatActivity() {
         fun moveDown(){
             x++
         }
+        fun moveLeft(){
+            y++
+        }
+        fun moveRight(){
+            y--
+        }
+
     }
 
-
     //val board = Array(LINHA, { IntArray(COLUNA) })
-
     var board = Array(LINHA) {
         Array(COLUNA){0}
     }
@@ -42,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_tela_jogo)
 
         gridboard.rowCount = LINHA
         gridboard.columnCount = COLUNA
