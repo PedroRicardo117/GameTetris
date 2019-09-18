@@ -16,6 +16,10 @@ class TelaInicial : AppCompatActivity() {
             var i = Intent(this, JogoActivity::class.java)
             startActivity(i)
         }
+        btnConfig.setOnClickListener(){
+            var i = Intent(this, ConfigurarActivity::class.java)
+            startActivity(i)
+        }
     }
 
 }
