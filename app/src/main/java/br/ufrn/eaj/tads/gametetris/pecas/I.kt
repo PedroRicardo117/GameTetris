@@ -3,14 +3,11 @@ package br.ufrn.eaj.tads.gametetris.pecas
 import br.ufrn.eaj.tads.gametetris.Ponto
 
 class I (x:Int, y:Int): Piece(x, y){
-    override fun rotate() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     init {
         pontoB = Ponto(x+1,y)
-        pontoC = Ponto(x+2,y)
-        pontoD = Ponto(x+3,y)
+        pontoC = Ponto(x-1,y)
+        pontoD = Ponto(x-2,y)
     }
     override fun moveDown(){
         pontoA.moveDown()
@@ -33,14 +30,14 @@ class I (x:Int, y:Int): Piece(x, y){
         pontoD.moveRight()
     }
 
-    override fun girar() {
-        pontoB.x += 1
-        pontoB.y += 1
+    override fun rotate() {
+        pontoB.x -= 1
+        pontoB.y -= 1
 
-        pontoC.x += 2
-        pontoC.y += 2
+        pontoC.x += 1
+        pontoC.y += 1
 
-        pontoD.x += 1
-        pontoD.y -= 1
+        pontoD.x += 2
+        pontoD.y += 2
     }
 }

@@ -1,16 +1,14 @@
 package br.ufrn.eaj.tads.gametetris.pecas
 
+import androidx.core.view.ViewParentCompat
 import br.ufrn.eaj.tads.gametetris.Ponto
 
 class T (x:Int, y:Int): Piece(x, y){
-    override fun girar() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     init {
-        pontoB = Ponto(x, y-1)
-        pontoC = Ponto(x, y+1)
-        pontoD = Ponto(x, y+1)
+        pontoB = Ponto(x, y+1)
+        pontoC = Ponto(x-1, y)
+        pontoD = Ponto(x, y-1)
 
     }
     override fun moveDown(){
@@ -35,13 +33,27 @@ class T (x:Int, y:Int): Piece(x, y){
     }
 
     override fun rotate(){
-        pontoB.x += 1
-        pontoB.y += 1
+        var x:Int = 0
+        if(x == 0){
+            pontoB.x -= 1
+            pontoB.y -= 1
 
-        pontoC.x += 2
-        pontoC.y += 2
+            pontoC.x += 1
+            pontoC.y += 1
 
-        pontoD.x += 1
-        pontoD.y -= 1
+            pontoD.x += 1
+            pontoD.y += 1
+        }else{
+            pontoB.x += 1
+            pontoB.y += 1
+
+            pontoC.x -= 1
+            pontoC.y -= 1
+
+            pontoD.x -= 1
+            pontoD.y -= 1
+        }
+
     }
 }
+
