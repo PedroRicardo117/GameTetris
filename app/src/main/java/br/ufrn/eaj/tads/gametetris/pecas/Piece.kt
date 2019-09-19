@@ -13,4 +13,5 @@ abstract class Piece(var x:Int, var y:Int){
     abstract fun moveLeft()
     abstract fun moveRight()
     abstract fun rotate()
+    abstract fun girar()
 }

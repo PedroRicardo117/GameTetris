@@ -5,7 +5,8 @@ import android.os.Bundle
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_tela_jogo.*
 import android.view.LayoutInflater
-import br.ufrn.eaj.tads.gametetris.pecas.L
+import br.ufrn.eaj.tads.gametetris.pecas.O
+import br.ufrn.eaj.tads.gametetris.pecas.T
 
 
 class JogoActivity : AppCompatActivity() {
@@ -15,7 +16,7 @@ class JogoActivity : AppCompatActivity() {
     var running = true
     var speed:Long = 300
 
-    var pt = L(0, 15)
+    var pt = T(0, 15)
 
     /*inner class Ponto(var x:Int,var y:Int){
         fun moveDown(){

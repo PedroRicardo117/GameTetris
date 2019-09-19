@@ -2,17 +2,17 @@ package br.ufrn.eaj.tads.gametetris.pecas
 
 import br.ufrn.eaj.tads.gametetris.Ponto
 
-class L (x:Int, y:Int): Piece(x, y){
+class O (x:Int, y:Int): Piece(x, y) {
     override fun girar() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     init {
-        pontoB = Ponto(x - 1, y)
-        pontoC = Ponto(x - 2, y)
-        pontoD = Ponto(x, y + 1)
-    }
+        pontoB = Ponto(x, y + 1)
+        pontoC = Ponto(x + 1, y)
+        pontoD = Ponto(x + 1, y + 1)
 
+    }
     override fun moveDown(){
         pontoA.moveDown()
         pontoB.moveDown()
