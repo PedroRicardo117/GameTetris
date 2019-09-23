@@ -6,6 +6,7 @@ import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_tela_jogo.*
 import android.view.LayoutInflater
 import br.ufrn.eaj.tads.gametetris.pecas.*
+import kotlin.random.Random
 
 
 class JogoActivity : AppCompatActivity() {
@@ -14,8 +15,8 @@ class JogoActivity : AppCompatActivity() {
     val COLUNA = 26
     var running = true
     var speed:Long = 300
-
-    var pt = S(0, 15)
+    var rotate:Boolean = true
+    var pt = novaPeca()
 
     //val board = Array(LINHA, { IntArray(COLUNA) })
     var board = Array(LINHA) {
@@ -42,19 +43,66 @@ class JogoActivity : AppCompatActivity() {
         }
         //realizam o movimento das peças do tabuleiro
         btnLeft.setOnClickListener(){
-            pt.moveLeft()
+            if(colideEsquerda()){
+                pt.moveLeft()
+            }
         }
         btnRight.setOnClickListener() {
-            pt.moveRight()
+            if(colideDireita()) {
+                pt.moveRight()
+            }
         }
         btnDown.setOnClickListener(){
-            pt.moveDown()
+            if(colideBaixo()){
+                pt.moveDown()
+            }
         }
         btnRotate.setOnClickListener(){
-            pt.rotate()
+            if(rotate == true) {
+                pt.rotateRight()
+                rotate = false
+            }else{
+                pt.rotateAgain()
+                rotate = true
+            }
         }
-
         gameRun()
+    }
+
+    fun novaPeca():Piece{
+        var pecaRandom = Random.nextInt(1,6)
+        when (pecaRandom) {
+            1 -> { return I(0, 13) }
+            2 -> { return L(0, 13) }
+            3 -> { return N(0, 13) }
+            4 -> { return O(0, 13) }
+            else-> return T(0, 13)
+        }
+    }
+
+    fun colideBaixo():Boolean{
+        return((pt.pontoA.x  + 1 < LINHA) && (pt.pontoB.x + 1 < LINHA)
+                && (pt.pontoC.x + 1 < LINHA) && (pt.pontoD.x + 1 < LINHA))
+    }
+    fun colideEsquerda():Boolean{
+        return((pt.pontoA.x - 1 < COLUNA) && (pt.pontoB.x - 1 < COLUNA)
+             && (pt.pontoC.x - 1 < COLUNA) && (pt.pontoD.x - 1 < COLUNA))
+    }
+    fun colideDireita():Boolean{
+        return((pt.pontoA.x  > 0) && (pt.pontoB.x > 0)
+                &&(pt.pontoC.y > 0) && (pt.pontoD.x > 0))
+    }
+    fun salvaPeca(){
+        board[pt.pontoA.x][pt.pontoA.y] = 1
+        board[pt.pontoB.x][pt.pontoB.y] = 1
+        board[pt.pontoC.x][pt.pontoC.y] = 1
+        board[pt.pontoD.x][pt.pontoD.y] = 1
+    }
+    fun printPeca(){
+        boardView[pt.pontoA.x][pt.pontoA.y]!!.setImageResource(R.drawable.white)
+        boardView[pt.pontoB.x][pt.pontoB.y]!!.setImageResource(R.drawable.white)
+        boardView[pt.pontoC.x][pt.pontoC.y]!!.setImageResource(R.drawable.white)
+        boardView[pt.pontoD.x][pt.pontoD.y]!!.setImageResource(R.drawable.white)
     }
 
     fun gameRun(){
@@ -65,21 +113,27 @@ class JogoActivity : AppCompatActivity() {
                     //limpa tela
                     for (i in 0 until LINHA) {
                         for (j in 0 until COLUNA) {
-                            boardView[i][j]!!.setImageResource(R.drawable.black)
+                            when(board[i][j]){
+                                0 -> {
+                                    boardView[i][j]!!.setImageResource(R.drawable.black)
+                                }
+                                1 -> {
+                                    boardView[i][j]!!.setImageResource(R.drawable.white)
+                                }
+
+                            }
+
                         }
                     }
                     //move peça atual
                     pt.moveDown()
-                    //print peça
-                    try {
-                        boardView[pt.pontoA.x][pt.pontoA.y]!!.setImageResource(R.drawable.white)
-                        boardView[pt.pontoB.x][pt.pontoB.y]!!.setImageResource(R.drawable.white)
-                        boardView[pt.pontoC.x][pt.pontoC.y]!!.setImageResource(R.drawable.white)
-                        boardView[pt.pontoD.x][pt.pontoD.y]!!.setImageResource(R.drawable.white)
-                        //boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                    }catch (e:ArrayIndexOutOfBoundsException ) {
-                        //se a peça passou das bordas eu vou parar o jogo
-                        running = true
+                    if(colideBaixo()) {
+                        printPeca()
+                    }else{
+                        novaPeca()
+                        salvaPeca()
+                        rotate = true
+                        pt = novaPeca()
                     }
 
                 }

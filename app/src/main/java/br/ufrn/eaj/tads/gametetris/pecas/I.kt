@@ -30,7 +30,7 @@ class I (x:Int, y:Int): Piece(x, y){
         pontoD.moveRight()
     }
 
-    override fun rotate() {
+    override fun rotateRight() {
         pontoB.x -= 1
         pontoB.y -= 1
 
@@ -39,5 +39,16 @@ class I (x:Int, y:Int): Piece(x, y){
 
         pontoD.x += 2
         pontoD.y += 2
+    }
+
+    override fun rotateAgain() {
+        pontoB.x += 1
+        pontoB.y += 1
+
+        pontoC.x -= 1
+        pontoC.y -= 1
+
+        pontoD.x -= 2
+        pontoD.x -= 2
     }
 }

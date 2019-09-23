@@ -4,7 +4,6 @@ import br.ufrn.eaj.tads.gametetris.Ponto
 
 class L (x:Int, y:Int): Piece(x, y){
 
-
     init {
         pontoB = Ponto(x - 1, y)
         pontoC = Ponto(x - 2, y)
@@ -32,28 +31,25 @@ class L (x:Int, y:Int): Piece(x, y){
         pontoD.moveRight()
     }
 
-    override fun rotate(){
-        var x = 0
-        if(x == 0){
-            pontoB.x += 1
-            pontoB.y += 1
+    override fun rotateRight(){
+        pontoB.x += 1
+        pontoB.y += 1
 
-            pontoC.x += 2
-            pontoC.y += 2
+        pontoC.x += 2
+        pontoC.y += 2
 
-            pontoD.x += 1
-            pontoD.y -= 1
-        }else{
-            pontoB.x -= 1
-            pontoB.y -= 1
+        pontoD.x += 1
+        pontoD.y -= 1
+    }
+    override fun rotateAgain(){
+        pontoB.x -= 1
+        pontoB.y -= 1
 
-            pontoC.x -= 2
-            pontoC.y -= 2
+        pontoC.x -= 2
+        pontoC.y -= 2
 
-            pontoD.x -= 1
-            pontoD.y += 1
-
-        }
+        pontoD.x -= 1
+        pontoD.y += 1
 
     }
 }
