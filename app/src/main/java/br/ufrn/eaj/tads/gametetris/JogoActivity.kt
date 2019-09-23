@@ -55,16 +55,20 @@ class JogoActivity : AppCompatActivity() {
         btnDown.setOnClickListener(){
             if(colideBaixo()){
                 pt.moveDown()
+
             }
         }
         btnRotate.setOnClickListener(){
-            if(rotate == true) {
-                pt.rotateRight()
-                rotate = false
-            }else{
-                pt.rotateAgain()
-                rotate = true
+            if(colideEsquerda() && colideDireita()){
+                if(rotate == true) {
+                    pt.rotateRight()
+                    rotate = false
+                }else{
+                    pt.rotateAgain()
+                    rotate = true
+                }
             }
+
         }
         gameRun()
     }
@@ -72,37 +76,60 @@ class JogoActivity : AppCompatActivity() {
     fun novaPeca():Piece{
         var pecaRandom = Random.nextInt(1,6)
         when (pecaRandom) {
-            1 -> { return I(0, 13) }
-            2 -> { return L(0, 13) }
-            3 -> { return N(0, 13) }
-            4 -> { return O(0, 13) }
-            else-> return T(0, 13)
+            1 -> {return I(0,13)}
+            2 -> {return L(0,13)}
+            3 -> {return N(0,13)}
+            4 -> {return O(0,13)}
+            5 -> {return S(0,13)}
+            else->return T(0,13)
         }
     }
 
     fun colideBaixo():Boolean{
-        return((pt.pontoA.x  + 1 < LINHA) && (pt.pontoB.x + 1 < LINHA)
-                && (pt.pontoC.x + 1 < LINHA) && (pt.pontoD.x + 1 < LINHA))
+        return( (pt.pontoA.x + 1 < LINHA && board[pt.pontoA.x + 1][pt.pontoA.y] < 1) &&
+                (pt.pontoB.x + 1 < LINHA && board[pt.pontoB.x + 1][pt.pontoB.y] < 1) &&
+                (pt.pontoC.x + 1 < LINHA && board[pt.pontoC.x + 1][pt.pontoC.y] < 1) &&
+                (pt.pontoD.x + 1 < LINHA && board[pt.pontoD.x + 1][pt.pontoD.y] < 1))
+        /*return((pt.pontoA.x  + 1 <  LINHA) && (pt.pontoB.x + 1 < LINHA)
+                && (pt.pontoC.x + 1 < LINHA) && (pt.pontoD.x + 1 < LINHA))*/
     }
+
     fun colideEsquerda():Boolean{
-        return((pt.pontoA.x - 1 < COLUNA) && (pt.pontoB.x - 1 < COLUNA)
-             && (pt.pontoC.x - 1 < COLUNA) && (pt.pontoD.x - 1 < COLUNA))
+        return( (pt.pontoA.x - 1 >= COLUNA && board[pt.pontoA.x][pt.pontoA.y - 1] < 1) &&
+                (pt.pontoB.x - 1 >= COLUNA && board[pt.pontoB.x][pt.pontoB.y - 1] < 1) &&
+                (pt.pontoC.x - 1 >= COLUNA && board[pt.pontoC.x][pt.pontoC.y - 1] < 1) &&
+                (pt.pontoD.x - 1 >= COLUNA && board[pt.pontoD.x][pt.pontoD.y - 1] < 1))
+        /*return((pt.pontoA.x - 1 >= COLUNA) && (pt.pontoB.x - 1 >= COLUNA) &&
+                 (pt.pontoC.x - 1 >= COLUNA) && (pt.pontoD.x - 1 >=  COLUNA))*/
     }
+
     fun colideDireita():Boolean{
-        return((pt.pontoA.x  > 0) && (pt.pontoB.x > 0)
-                &&(pt.pontoC.y > 0) && (pt.pontoD.x > 0))
+        return( (pt.pontoA.x + 1 < COLUNA && board[pt.pontoA.x][pt.pontoA.y + 1] > 1) &&
+                (pt.pontoB.x + 1 < COLUNA && board[pt.pontoB.x][pt.pontoB.y + 1] > 1) &&
+                (pt.pontoC.x + 1 < COLUNA && board[pt.pontoC.x][pt.pontoC.y + 1] > 1) &&
+                (pt.pontoD.x + 1 < COLUNA && board[pt.pontoD.x][pt.pontoD.y + 1] > 1))
+        /*return( (pt.pontoA.x + 1 < COLUNA) && (pt.pontoB.x + 1 > COLUNA) &&
+                  (pt.pontoC.y + 1< COLUNA) && (pt.pontoD.x + 1 > COLUNA))*/
     }
-    fun salvaPeca(){
-        board[pt.pontoA.x][pt.pontoA.y] = 1
-        board[pt.pontoB.x][pt.pontoB.y] = 1
-        board[pt.pontoC.x][pt.pontoC.y] = 1
-        board[pt.pontoD.x][pt.pontoD.y] = 1
+    fun colidePeca(): Boolean {
+        return( (board[pt.pontoA.x][pt.pontoA.y] != 1) &&
+                (board[pt.pontoB.x][pt.pontoB.y] != 1) &&
+                (board[pt.pontoC.x][pt.pontoC.y] != 1) &&
+                (board[pt.pontoD.x][pt.pontoD.y] != 1))
     }
+
     fun printPeca(){
         boardView[pt.pontoA.x][pt.pontoA.y]!!.setImageResource(R.drawable.white)
         boardView[pt.pontoB.x][pt.pontoB.y]!!.setImageResource(R.drawable.white)
         boardView[pt.pontoC.x][pt.pontoC.y]!!.setImageResource(R.drawable.white)
         boardView[pt.pontoD.x][pt.pontoD.y]!!.setImageResource(R.drawable.white)
+    }
+
+    fun salvaPeca(){
+        board[pt.pontoA.x][pt.pontoA.y] = 1
+        board[pt.pontoB.x][pt.pontoB.y] = 1
+        board[pt.pontoC.x][pt.pontoC.y] = 1
+        board[pt.pontoD.x][pt.pontoD.y] = 1
     }
 
     fun gameRun(){
@@ -127,10 +154,11 @@ class JogoActivity : AppCompatActivity() {
                     }
                     //move peça atual
                     pt.moveDown()
-                    if(colideBaixo()) {
+                    //gera uma nova peça - primeira verifica se houve colisão entre peças e colisão como final do tabuleiro
+                    if(colideBaixo() && colidePeca()) {
                         printPeca()
                     }else{
-                        novaPeca()
+                        printPeca()
                         salvaPeca()
                         rotate = true
                         pt = novaPeca()
