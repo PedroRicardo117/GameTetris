@@ -5,9 +5,10 @@ import android.os.Bundle
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_tela_jogo.*
 import android.view.LayoutInflater
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import br.ufrn.eaj.tads.gametetris.pecas.*
 import kotlin.random.Random
-
 
 class JogoActivity : AppCompatActivity() {
 
@@ -17,6 +18,10 @@ class JogoActivity : AppCompatActivity() {
     var speed:Long = 300
     var rotate:Boolean = true
     var pt = novaPeca()
+
+    val view: BoardViewModel by lazy {
+        ViewModelProviders.of(this)[BoardViewModel::class.java]
+    }
 
     //val board = Array(LINHA, { IntArray(COLUNA) })
     var board = Array(LINHA) {
@@ -41,23 +46,27 @@ class JogoActivity : AppCompatActivity() {
                 gridboard.addView( boardView[i][j])
             }
         }
+
         //realizam o movimento das peças do tabuleiro
         btnLeft.setOnClickListener(){
             if(colideEsquerda()){
                 pt.moveLeft()
             }
         }
+
         btnRight.setOnClickListener() {
             if(colideDireita()) {
                 pt.moveRight()
             }
         }
+
         btnDown.setOnClickListener(){
             if(colideBaixo()){
                 pt.moveDown()
 
             }
         }
+
         btnRotate.setOnClickListener(){
             if(colideEsquerda() && colideDireita()){
                 if(rotate == true) {
@@ -68,20 +77,21 @@ class JogoActivity : AppCompatActivity() {
                     rotate = true
                 }
             }
-
         }
         gameRun()
     }
+    fun
 
     fun novaPeca():Piece{
-        var pecaRandom = Random.nextInt(1,6)
+        var pecaRandom = Random.nextInt(0, 6)
         when (pecaRandom) {
             1 -> {return I(0,13)}
             2 -> {return L(0,13)}
             3 -> {return N(0,13)}
             4 -> {return O(0,13)}
             5 -> {return S(0,13)}
-            else->return T(0,13)
+            6 -> {return T(0,13)}
+            else->return Z(0,13)
         }
     }
 
@@ -90,26 +100,26 @@ class JogoActivity : AppCompatActivity() {
                 (pt.pontoB.x + 1 < LINHA && board[pt.pontoB.x + 1][pt.pontoB.y] < 1) &&
                 (pt.pontoC.x + 1 < LINHA && board[pt.pontoC.x + 1][pt.pontoC.y] < 1) &&
                 (pt.pontoD.x + 1 < LINHA && board[pt.pontoD.x + 1][pt.pontoD.y] < 1))
-        /*return((pt.pontoA.x  + 1 <  LINHA) && (pt.pontoB.x + 1 < LINHA)
-                && (pt.pontoC.x + 1 < LINHA) && (pt.pontoD.x + 1 < LINHA))*/
+        /*return( (pt.pontoA.x  + 1 <  LINHA) && (pt.pontoB.x + 1 < LINHA) &&
+                (pt.pontoC.x + 1 < LINHA) && (pt.pontoD.x + 1 < LINHA))*/
     }
 
     fun colideEsquerda():Boolean{
-        return( (pt.pontoA.x - 1 >= COLUNA && board[pt.pontoA.x][pt.pontoA.y - 1] < 1) &&
-                (pt.pontoB.x - 1 >= COLUNA && board[pt.pontoB.x][pt.pontoB.y - 1] < 1) &&
-                (pt.pontoC.x - 1 >= COLUNA && board[pt.pontoC.x][pt.pontoC.y - 1] < 1) &&
-                (pt.pontoD.x - 1 >= COLUNA && board[pt.pontoD.x][pt.pontoD.y - 1] < 1))
-        /*return((pt.pontoA.x - 1 >= COLUNA) && (pt.pontoB.x - 1 >= COLUNA) &&
-                 (pt.pontoC.x - 1 >= COLUNA) && (pt.pontoD.x - 1 >=  COLUNA))*/
+        /*return( (pt.pontoA.y - 1 >= 0 && board[pt.pontoA.x][pt.pontoA.y - 1] < 1) &&
+                (pt.pontoB.y - 1 >= 0 && board[pt.pontoB.x][pt.pontoB.y - 1] < 1) &&
+                (pt.pontoC.y - 1 >= 0 && board[pt.pontoC.x][pt.pontoC.y - 1] < 1) &&
+                (pt.pontoD.y - 1 >= 0 && board[pt.pontoD.x][pt.pontoD.y - 1] < 1))*/
+        return( (pt.pontoA.y - 1 >= 0) && (pt.pontoB.y - 1 >= 0) &&
+                (pt.pontoC.y - 1 >= 0) && (pt.pontoD.y - 1 >= 0))
     }
 
     fun colideDireita():Boolean{
-        return( (pt.pontoA.x + 1 < COLUNA && board[pt.pontoA.x][pt.pontoA.y + 1] > 1) &&
-                (pt.pontoB.x + 1 < COLUNA && board[pt.pontoB.x][pt.pontoB.y + 1] > 1) &&
-                (pt.pontoC.x + 1 < COLUNA && board[pt.pontoC.x][pt.pontoC.y + 1] > 1) &&
-                (pt.pontoD.x + 1 < COLUNA && board[pt.pontoD.x][pt.pontoD.y + 1] > 1))
-        /*return( (pt.pontoA.x + 1 < COLUNA) && (pt.pontoB.x + 1 > COLUNA) &&
-                  (pt.pontoC.y + 1< COLUNA) && (pt.pontoD.x + 1 > COLUNA))*/
+        /*return( (pt.pontoA.y + 1 < COLUNA && board[pt.pontoA.x][pt.pontoA.y + 1] < 1) &&
+                (pt.pontoB.y + 1 < COLUNA && board[pt.pontoB.x][pt.pontoB.y + 1] < 1) &&
+                (pt.pontoC.y + 1 < COLUNA && board[pt.pontoC.x][pt.pontoC.y + 1] < 1) &&
+                (pt.pontoD.y + 1 < COLUNA && board[pt.pontoD.x][pt.pontoD.y + 1] < 1))*/
+        return( (pt.pontoA.y + 1 < COLUNA) && (pt.pontoB.y + 1 < COLUNA) &&
+                (pt.pontoC.y + 1 < COLUNA) && (pt.pontoD.y + 1 < COLUNA))
     }
     fun colidePeca(): Boolean {
         return( (board[pt.pontoA.x][pt.pontoA.y] != 1) &&
@@ -119,10 +129,10 @@ class JogoActivity : AppCompatActivity() {
     }
 
     fun printPeca(){
-        boardView[pt.pontoA.x][pt.pontoA.y]!!.setImageResource(R.drawable.white)
-        boardView[pt.pontoB.x][pt.pontoB.y]!!.setImageResource(R.drawable.white)
-        boardView[pt.pontoC.x][pt.pontoC.y]!!.setImageResource(R.drawable.white)
-        boardView[pt.pontoD.x][pt.pontoD.y]!!.setImageResource(R.drawable.white)
+        boardView[pt.pontoA.x][pt.pontoA.y]!!.setImageResource(R.drawable.green)
+        boardView[pt.pontoB.x][pt.pontoB.y]!!.setImageResource(R.drawable.green)
+        boardView[pt.pontoC.x][pt.pontoC.y]!!.setImageResource(R.drawable.green)
+        boardView[pt.pontoD.x][pt.pontoD.y]!!.setImageResource(R.drawable.green)
     }
 
     fun salvaPeca(){
@@ -130,6 +140,12 @@ class JogoActivity : AppCompatActivity() {
         board[pt.pontoB.x][pt.pontoB.y] = 1
         board[pt.pontoC.x][pt.pontoC.y] = 1
         board[pt.pontoD.x][pt.pontoD.y] = 1
+    }
+    fun destruir(linha:Int){
+        view.board[linha] = Array(COLUNA)
+        for(i in linha downTo 1){
+            view.board[i] = view.board[i - 1]
+        }
     }
 
     fun gameRun(){
@@ -145,11 +161,9 @@ class JogoActivity : AppCompatActivity() {
                                     boardView[i][j]!!.setImageResource(R.drawable.black)
                                 }
                                 1 -> {
-                                    boardView[i][j]!!.setImageResource(R.drawable.white)
+                                    boardView[i][j]!!.setImageResource(R.drawable.green)
                                 }
-
                             }
-
                         }
                     }
                     //move peça atual
@@ -162,10 +176,16 @@ class JogoActivity : AppCompatActivity() {
                         salvaPeca()
                         rotate = true
                         pt = novaPeca()
+                        running = true
                     }
-
+                    for ()
                 }
             }
         }.start()
     }
+   /* override fun onRestart(){
+        super.onRestart()
+        running = true
+    }*/
 }
+
