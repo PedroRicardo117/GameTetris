@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GameTetris</string>
+    <string name="Pontucao">Score:</string>
+    <string name="configura_es">Settings</string>
+    <string name="continuar">Continue</string>
+    <string name="dificil">Hard</string>
+    <string name="down">Down</string>
+    <string name="facil">Easy</string>
+    <string name="left">Left</string>
+    <string name="normal">Normal</string>
+    <string name="novo_jogo">New Game</string>
+    <string name="proximo">Next Piece:</string>
+    <string name="right">Right</string>
+    <string name="rotate">Rotate</string>
+    <string name="salvar">Save</string>
+    <string name="tetris">Tetris</string>
+    <string name="velocidade">Speed</string>
+    <string name="voltar">Return</string>
+</resources>

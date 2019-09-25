@@ -19,7 +19,7 @@
             android:layout_width="90dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="  Pontução: 0"
+            android:text="@string/Pontucao"
             android:textAlignment="center"
             android:textColor="#EDFFFFFF"
             android:textSize="24sp"
@@ -30,7 +30,7 @@
             android:layout_width="90dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Proximo:"
+            android:text="@string/proximo"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
@@ -55,21 +55,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="LEFT" />
+            android:text="@string/left" />
 
         <Button
             android:id="@+id/btnRotate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ROTATE" />
+            android:text="@string/rotate" />
 
         <Button
             android:id="@+id/btnRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RIGHT" />
+            android:text="@string/right" />
 
     </LinearLayout>
 
@@ -81,10 +81,10 @@
 
         <Button
             android:id="@+id/btnDown"
-            android:layout_width="128dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Down" />
+            android:text="@string/down" />
     </LinearLayout>
 
 </LinearLayout>

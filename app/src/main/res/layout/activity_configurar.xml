@@ -26,7 +26,7 @@
             android:id="@+id/btnEasy"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="Fácil"
+            android:text="@string/facil"
             android:textColor="#FFFFFF"
             android:textSize="24sp" />
 
@@ -35,7 +35,7 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_regular"
-            android:text="Normal"
+            android:text="@string/normal"
             android:textColor="#FDFFFFFF"
             android:textSize="24sp" />
 
@@ -44,7 +44,7 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Difícil"
+            android:text="@string/dificil"
             android:textColor="#FCFCFC"
             android:textSize="24sp" />
 
@@ -58,7 +58,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="448dp"
         android:fontFamily="@font/roboto_regular"
-        android:text="Velocidade"
+        android:text="@string/velocidade"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
@@ -75,7 +75,7 @@
         android:layout_marginEnd="224dp"
         android:background="#FF0000"
         android:radius="10dp"
-        android:text="Voltar"
+        android:text="@string/voltar"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +88,7 @@
         android:layout_width="124dp"
         android:layout_height="54dp"
         android:background="#00BFA5"
-        android:text="Salvar"
+        android:text="@string/salvar"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

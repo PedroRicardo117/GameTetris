@@ -19,9 +19,9 @@ class JogoActivity : AppCompatActivity() {
     var rotate:Boolean = true
     var pt = novaPeca()
 
-    val view: BoardViewModel by lazy {
+    /*val view: BoardViewModel by lazy {
         ViewModelProviders.of(this)[BoardViewModel::class.java]
-    }
+    }*/
 
     //val board = Array(LINHA, { IntArray(COLUNA) })
     var board = Array(LINHA) {
@@ -80,7 +80,6 @@ class JogoActivity : AppCompatActivity() {
         }
         gameRun()
     }
-    fun
 
     fun novaPeca():Piece{
         var pecaRandom = Random.nextInt(0, 6)
@@ -141,12 +140,12 @@ class JogoActivity : AppCompatActivity() {
         board[pt.pontoC.x][pt.pontoC.y] = 1
         board[pt.pontoD.x][pt.pontoD.y] = 1
     }
-    fun destruir(linha:Int){
+    /*fun destruir(linha:Int){
         view.board[linha] = Array(COLUNA)
         for(i in linha downTo 1){
             view.board[i] = view.board[i - 1]
         }
-    }
+    }*/
 
     fun gameRun(){
         Thread{
@@ -178,7 +177,6 @@ class JogoActivity : AppCompatActivity() {
                         pt = novaPeca()
                         running = true
                     }
-                    for ()
                 }
             }
         }.start()

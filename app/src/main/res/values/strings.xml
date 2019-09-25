@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">GameTetris</string>
+    <string name="facil">Fácil</string>
+    <string name="normal">Normal</string>
+    <string name="dificil">Difícil</string>
+    <string name="velocidade">Velocidade</string>
+    <string name="voltar">Voltar</string>
+    <string name="salvar">Salvar</string>
+    <string name="tetris">Tetris</string>
+    <string name="novo_jogo">Novo Jogo</string>
+    <string name="continuar">Continuar</string>
+    <string name="configura_es">Configurações</string>
+    <string name="todo">TODO</string>
+    <string name="Pontucao">Pontução:</string>
+    <string name="left">LEFT</string>
+    <string name="rotate">ROTATE</string>
+    <string name="proximo">Proximo:</string>
+    <string name="right">RIGHT</string>
+    <string name="down">Down</string>
 </resources>
