@@ -109,22 +109,22 @@ class JogoActivity : AppCompatActivity() {
     }
 
     fun colideEsquerda():Boolean{
-        return( (pt.pontoA.y - 1 >= 0 && board[pt.pontoA.x][pt.pontoA.y - 1] < 1) &&
-                (pt.pontoB.y - 1 >= 0 && board[pt.pontoB.x][pt.pontoB.y - 1] < 1) &&
-                (pt.pontoC.y - 1 >= 0 && board[pt.pontoC.x][pt.pontoC.y - 1] < 1) &&
-                (pt.pontoD.y - 1 >= 0 && board[pt.pontoD.x][pt.pontoD.y - 1] < 1))
-        /*return( (pt.pontoA.y - 1 >= 0) && (pt.pontoB.y - 1 >= 0) &&
-                (pt.pontoC.y - 1 >= 0) && (pt.pontoD.y - 1 >= 0))*/
+        /*return( (pt.pontoA.y - 1 >= 0 && board[pt.pontoA.x][pt.pontoA.y - 1] < 1) &&
+                  (pt.pontoB.y - 1 >= 0 && board[pt.pontoB.x][pt.pontoB.y - 1] < 1) &&
+                  (pt.pontoC.y - 1 >= 0 && board[pt.pontoC.x][pt.pontoC.y - 1] < 1) &&
+                  (pt.pontoD.y - 1 >= 0 && board[pt.pontoD.x][pt.pontoD.y - 1] < 1))*/
+        return( (pt.pontoA.y - 1 >= 0) && (pt.pontoB.y - 1 >= 0) &&
+                (pt.pontoC.y - 1 >= 0) && (pt.pontoD.y - 1 >= 0))
 
     }
 
     fun colideDireita():Boolean{
-        return( (pt.pontoA.y + 1 < COLUNA && board[pt.pontoA.x][pt.pontoA.y + 1] < 1) &&
-                (pt.pontoB.y + 1 < COLUNA && board[pt.pontoB.x][pt.pontoB.y + 1] < 1) &&
-                (pt.pontoC.y + 1 < COLUNA && board[pt.pontoC.x][pt.pontoC.y + 1] < 1) &&
-                (pt.pontoD.y + 1 < COLUNA && board[pt.pontoD.x][pt.pontoD.y + 1] < 1))
-        /*return( (pt.pontoA.y + 1 < COLUNA) && (pt.pontoB.y + 1 < COLUNA) &&
-                (pt.pontoC.y + 1 < COLUNA) && (pt.pontoD.y + 1 < COLUNA))*/
+        /*return( (pt.pontoA.y + 1 < COLUNA && board[pt.pontoA.x][pt.pontoA.y + 1] < 1) &&
+                  (pt.pontoB.y + 1 < COLUNA && board[pt.pontoB.x][pt.pontoB.y + 1] < 1) &&
+                  (pt.pontoC.y + 1 < COLUNA && board[pt.pontoC.x][pt.pontoC.y + 1] < 1) &&
+                  (pt.pontoD.y + 1 < COLUNA && board[pt.pontoD.x][pt.pontoD.y + 1] < 1))*/
+        return( (pt.pontoA.y + 1 < COLUNA) && (pt.pontoB.y + 1 < COLUNA) &&
+                (pt.pontoC.y + 1 < COLUNA) && (pt.pontoD.y + 1 < COLUNA))
     }
     fun colidePeca(): Boolean {
         return( (view.board[pt.pontoA.x][pt.pontoA.y] == 0) &&
