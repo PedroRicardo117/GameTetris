@@ -6,7 +6,7 @@ import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_tela_jogo.*
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import br.ufrn.eaj.tads.gametetris.pecas.*
 import kotlin.random.Random
 
@@ -15,13 +15,14 @@ class JogoActivity : AppCompatActivity() {
     val LINHA = 36
     val COLUNA = 26
     var running = true
-    var speed:Long = 300
+    var speed:Long = 200
     var rotate:Boolean = true
     var pt = novaPeca()
+    var contDestruir= 0
 
-    /*val view: BoardViewModel by lazy {
-        ViewModelProviders.of(this)[BoardViewModel::class.java]
-    }*/
+    val view: BoardModel by lazy {
+        ViewModelProviders.of(this)[BoardModel::class.java]
+    }
 
     //val board = Array(LINHA, { IntArray(COLUNA) })
     var board = Array(LINHA) {
@@ -51,18 +52,21 @@ class JogoActivity : AppCompatActivity() {
         btnLeft.setOnClickListener(){
             if(colideEsquerda()){
                 pt.moveLeft()
+                running = true
             }
         }
 
         btnRight.setOnClickListener() {
             if(colideDireita()) {
                 pt.moveRight()
+                running = true
             }
         }
 
         btnDown.setOnClickListener(){
             if(colideBaixo()){
                 pt.moveDown()
+                running = true
 
             }
         }
@@ -76,6 +80,7 @@ class JogoActivity : AppCompatActivity() {
                     pt.rotateAgain()
                     rotate = true
                 }
+                running = true
             }
         }
         gameRun()
@@ -104,27 +109,28 @@ class JogoActivity : AppCompatActivity() {
     }
 
     fun colideEsquerda():Boolean{
-        /*return( (pt.pontoA.y - 1 >= 0 && board[pt.pontoA.x][pt.pontoA.y - 1] < 1) &&
+        return( (pt.pontoA.y - 1 >= 0 && board[pt.pontoA.x][pt.pontoA.y - 1] < 1) &&
                 (pt.pontoB.y - 1 >= 0 && board[pt.pontoB.x][pt.pontoB.y - 1] < 1) &&
                 (pt.pontoC.y - 1 >= 0 && board[pt.pontoC.x][pt.pontoC.y - 1] < 1) &&
-                (pt.pontoD.y - 1 >= 0 && board[pt.pontoD.x][pt.pontoD.y - 1] < 1))*/
-        return( (pt.pontoA.y - 1 >= 0) && (pt.pontoB.y - 1 >= 0) &&
-                (pt.pontoC.y - 1 >= 0) && (pt.pontoD.y - 1 >= 0))
+                (pt.pontoD.y - 1 >= 0 && board[pt.pontoD.x][pt.pontoD.y - 1] < 1))
+        /*return( (pt.pontoA.y - 1 >= 0) && (pt.pontoB.y - 1 >= 0) &&
+                (pt.pontoC.y - 1 >= 0) && (pt.pontoD.y - 1 >= 0))*/
+
     }
 
     fun colideDireita():Boolean{
-        /*return( (pt.pontoA.y + 1 < COLUNA && board[pt.pontoA.x][pt.pontoA.y + 1] < 1) &&
+        return( (pt.pontoA.y + 1 < COLUNA && board[pt.pontoA.x][pt.pontoA.y + 1] < 1) &&
                 (pt.pontoB.y + 1 < COLUNA && board[pt.pontoB.x][pt.pontoB.y + 1] < 1) &&
                 (pt.pontoC.y + 1 < COLUNA && board[pt.pontoC.x][pt.pontoC.y + 1] < 1) &&
-                (pt.pontoD.y + 1 < COLUNA && board[pt.pontoD.x][pt.pontoD.y + 1] < 1))*/
-        return( (pt.pontoA.y + 1 < COLUNA) && (pt.pontoB.y + 1 < COLUNA) &&
-                (pt.pontoC.y + 1 < COLUNA) && (pt.pontoD.y + 1 < COLUNA))
+                (pt.pontoD.y + 1 < COLUNA && board[pt.pontoD.x][pt.pontoD.y + 1] < 1))
+        /*return( (pt.pontoA.y + 1 < COLUNA) && (pt.pontoB.y + 1 < COLUNA) &&
+                (pt.pontoC.y + 1 < COLUNA) && (pt.pontoD.y + 1 < COLUNA))*/
     }
     fun colidePeca(): Boolean {
-        return( (board[pt.pontoA.x][pt.pontoA.y] != 1) &&
-                (board[pt.pontoB.x][pt.pontoB.y] != 1) &&
-                (board[pt.pontoC.x][pt.pontoC.y] != 1) &&
-                (board[pt.pontoD.x][pt.pontoD.y] != 1))
+        return( (view.board[pt.pontoA.x][pt.pontoA.y] == 0) &&
+                (view.board[pt.pontoB.x][pt.pontoB.y] == 0) &&
+                (view.board[pt.pontoC.x][pt.pontoC.y] == 0) &&
+                (view.board[pt.pontoD.x][pt.pontoD.y] == 0))
     }
 
     fun printPeca(){
@@ -139,23 +145,25 @@ class JogoActivity : AppCompatActivity() {
         board[pt.pontoB.x][pt.pontoB.y] = 1
         board[pt.pontoC.x][pt.pontoC.y] = 1
         board[pt.pontoD.x][pt.pontoD.y] = 1
+
+        running = true
     }
-    /*fun destruir(linha:Int){
-        view.board[linha] = Array(COLUNA)
-        for(i in linha downTo 1){
+    fun destruir(x:Int){
+        view.board[x] = Array(COLUNA) {0}
+        for(i in x downTo 1){
             view.board[i] = view.board[i - 1]
         }
-    }*/
+    }
 
-    fun gameRun(){
-        Thread{
-            while(running){
+    fun gameRun() {
+        Thread {
+            while (running) {
                 Thread.sleep(speed)
-                runOnUiThread{
+                runOnUiThread {
                     //limpa tela
                     for (i in 0 until LINHA) {
                         for (j in 0 until COLUNA) {
-                            when(board[i][j]){
+                            when (board[i][j]) {
                                 0 -> {
                                     boardView[i][j]!!.setImageResource(R.drawable.black)
                                 }
@@ -168,22 +176,32 @@ class JogoActivity : AppCompatActivity() {
                     //move peça atual
                     pt.moveDown()
                     //gera uma nova peça - primeira verifica se houve colisão entre peças e colisão como final do tabuleiro
-                    if(colideBaixo() && colidePeca()) {
+                    if (colideBaixo() && colidePeca()) {
                         printPeca()
-                    }else{
+                    } else {
                         printPeca()
                         salvaPeca()
                         rotate = true
                         pt = novaPeca()
-                        running = true
+                    }
+                    for(x in 0 until LINHA){
+                            contDestruir
+                        for (y in 0 until COLUNA){
+                            if (view.board[x][y] == 0){
+                                break
+                            }
+                            else{
+                                contDestruir++
+                                if (contDestruir == COLUNA){
+                                    destruir(x)
+                                }
+                            }
+
+                        }
                     }
                 }
+
             }
         }.start()
     }
-   /* override fun onRestart(){
-        super.onRestart()
-        running = true
-    }*/
 }
-
